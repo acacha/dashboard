@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Activity;
 use App\Task;
 use App\Thread;
+use Cache;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -40,7 +41,15 @@ class DashboardController extends Controller
 
     public function tasksNumber()
     {
-        return Task::all()->count();
+        // CACHE MISS --> No ho trobo a la cache
+        // CACHE HIT --> S'ha trobat valor a la cache
+        $value = Cache::remember('tasksNumber',5, function () {
+            // Codi a executar si CACHE MISS
+            return Task::all()->count();
+        });
+
+        return $value;
+
     }
 
     public function threadsNumber()
@@ -60,6 +69,6 @@ class DashboardController extends Controller
 
     public function fetchActivityFeed()
     {
-        return Activity::all();
+        return Activity::orderbyDesc('updated_at')->get();
     }
 }

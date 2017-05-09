@@ -37,7 +37,7 @@ trait RecordsActivity
      */
     protected static function getActivitiesToRecord()
     {
-        return ['created'];
+        return ['created','updated','deleted'];
     }
 
     /**
@@ -50,6 +50,7 @@ trait RecordsActivity
             $this->activity()->create([
                 'user_id' => auth()->id(),
                 'type' => $this->getActivityType($event)
+//                'title' => $this->getTitle($event)
             ]);
     }
 
@@ -70,6 +71,19 @@ trait RecordsActivity
      * @return string
      */
     protected function getActivityType($event)
+    {
+        $type = strtolower((new \ReflectionClass($this))->getShortName());
+
+        return "{$event}_{$type}";
+    }
+
+    /**
+     * Determine the activity type.
+     *
+     * @param  string $event
+     * @return string
+     */
+    protected function getTitle($event)
     {
         $type = strtolower((new \ReflectionClass($this))->getShortName());
 

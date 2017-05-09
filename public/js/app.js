@@ -40615,6 +40615,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   methods: {
+    // a computed getter
+    getTitle: function getTitle(type) {
+      switch (type) {
+        case 'created_task':
+          return 'Tasca creada';
+        case 'created_thread':
+          return 'Thread creat';
+        default:
+          return 'TODO title';
+      }
+    },
     fetchActivityFeed: function fetchActivityFeed() {
       console.log('fetchActivityFeedg executed!');
       var component = this;
@@ -81831,7 +81842,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "fa fa-clock-o"
     }), _vm._v(" " + _vm._s(activity.updated_at))]), _vm._v(" "), _c('h3', {
       staticClass: "timeline-header"
-    }, [_vm._v("TODO TITLE")]), _vm._v(" "), _c('div', {
+    }, [_vm._v(_vm._s(_vm.getTitle(activity.type)))]), _vm._v(" "), _c('div', {
       staticClass: "timeline-body"
     }, [_vm._v("\n                TODO DESCRIPTION " + _vm._s(activity.type) + "\n            ")]), _vm._v(" "), _vm._m(1, true)])])
   })], 2)
